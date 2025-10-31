@@ -1,9 +1,17 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Item } from "../types/item";
 import { v4 as uuidv4 } from "uuid";
 
+
 export const useItems = () => {
-  const [items, setItems] = useState<Item[]>([]);
+  const [items, setItems] = useState<Item[]>(() => {
+    const saved = localStorage.getItem("items");
+    return saved ? JSON.parse(saved) : [];
+  });
+
+   useEffect(() => {
+    localStorage.setItem("items", JSON.stringify(items));
+  }, [items]);
 
   const addItem = (title: string, subtitle: string) => {
     const newItem: Item = {

@@ -5,7 +5,7 @@ import ItemCard from "./components/ItemCard";
 import ItemModal from "./components/ItemModal";
 
 function App() {
-  const { items } = useItems();
+  const { items, addItem, updateItem, deleteItem } = useItems();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editItem, setEditItem] = useState<Item | null>(null);
 
@@ -24,8 +24,21 @@ function App() {
   };
 
   const handleSubmit = (title: string, subtitle: string) => {
-    console.log("Form submitted:", { title, subtitle });
+    if (editItem) {
+      updateItem(editItem.id, title, subtitle);
+    } else {
+      addItem(title, subtitle);
+    }
     closeModal();
+  };
+
+  const handleDelete = (id: string) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this item?"
+    );
+    if (confirmDelete) {
+      deleteItem(id);
+    }
   };
 
   return (
@@ -35,7 +48,7 @@ function App() {
       </h1>
       <button
         onClick={openCreateModal}
-        className="mb-6 px-6 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 
+        className="mb-6 px-6 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 
       transition font-bold cursor-pointer"
       >
         + Create Item
@@ -48,7 +61,7 @@ function App() {
               key={item.id}
               item={item}
               onEdit={() => openEditModal(item)}
-              onDelete={() => console.log("delete", item.id)}
+              onDelete={() => handleDelete(item.id)}
             />
           ))
         ) : (

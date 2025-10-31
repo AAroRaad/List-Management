@@ -2,6 +2,7 @@ import { useForm } from "react-hook-form";
 import type { Item } from "../types/item";
 import { AnimatePresence, motion } from "framer-motion";
 import { IoCloseCircleOutline } from "react-icons/io5";
+import { useEffect } from "react";
 
 interface ItemModalProps {
   isOpen: boolean;
@@ -37,6 +38,15 @@ const ItemModal = ({
     });
     onClose();
   };
+
+  useEffect(() => {
+    if (isOpen) {
+      reset({
+        title: defaultValues?.title || "",
+        subtitle: defaultValues?.subtitle || "",
+      });
+    }
+  }, [defaultValues, isOpen, reset]);
 
   const submitHandler = (data: FormValues) => {
     onSubmit(data.title, data.subtitle);
@@ -104,7 +114,7 @@ const ItemModal = ({
                 </button>
                 <button
                   type="submit"
-                  className="px-4 py-2 bg-blue-600 text-white rounded-md hover:bg-blue-700 cursor-pointer"
+                  className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 cursor-pointer"
                 >
                   {defaultValues ? "Update" : "Create"}
                 </button>
