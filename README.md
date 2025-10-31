@@ -23,17 +23,3 @@ Users can create, edit, and delete items, each containing a title, subtitle, and
 ✅ Form validation with React Hook Form  
 ✅ Smooth animations with Framer Motion  
 ✅ Data persistence in LocalStorage  
-
----
-
-## 🧱 Project Structure
-src/
-├── components/
-│ ├── ItemCard.tsx
-│ └── ItemModal.tsx
-├── hooks/
-│ └── useItems.ts
-├── types/
-│ └── Item.ts
-├── App.tsx
-└── main.tsx
